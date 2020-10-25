@@ -4062,55 +4062,6 @@ async def sticklet(event):
         return
 
 
-@register(pattern="")
-async def spam_update(event):
-    if not event:
-        return
-    if event.fwd_from:
-        return
-    if event.is_private:
-        return
-    if MONGO_DB_URI is None:
-        return
-    sender = await event.get_sender()
-    chats = spammers.find({})
-    for c in chats:
-        if event.chat_id == c['id']:    
-           if event.is_group:
-              if (await is_register_admin(event.chat_id, event.from_id)):
-                  return
-              else:
-                  pass
-                  
-           if event.text:
-                if profanity.contains_profanity(msg):
-                    await event.delete()
-                    if sender.username is None:
-                        st = sender.first_name
-                        hh = sender.id
-                        final = f"[{st}](tg://user?id={hh}) **{msg}** is detected as a slang word and your message has been deleted"
-                    else:
-                        let = sender.username
-                        final = f'@{let} **{msg}** is detected as a slang word and your message has been deleted'
-                    dev = await event.respond(final)
-                    await asyncio.sleep(10)
-                    await dev.delete()          
-           if event.photo:
-                await event.client.download_media(event.photo, "nudes.jpg")
-                if nude.is_nude('./nudes.jpg'):
-                    await event.delete()
-                    if sender.username is None:
-                        st = sender.first_name
-                        hh = sender.id
-                        final = f"[{st}](tg://user?id={hh}) your message has been deleted due to pornographic content"
-                    else:
-                        final = f'@{let} your message has been deleted due to pornographic content'
-                    dev = await event.respond(final)
-                    await asyncio.sleep(10)
-                    await dev.delete()
-                    os.remove("nudes.jpg")
-
-
 @register(pattern="^/eval")
 async def _(event):
     check = event.message.sender_id
@@ -4219,8 +4170,7 @@ async def _(event):
     else:
         evaluation = "Success 😃"
 
-    final_output = "**OUTPUT**: \n`{}` \n".format(
-        cmd, evaluation)
+    final_output = "**OUTPUT**:\n\n`{}`".format(evaluation)
     MAX_MESSAGE_SIZE_LIMIT = 4095
     if len(final_output) > MAX_MESSAGE_SIZE_LIMIT:
         with io.BytesIO(str.encode(final_output)) as out_file:

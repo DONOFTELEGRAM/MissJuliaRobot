@@ -126,8 +126,8 @@ def new_member(update: Update, context: CallbackContext):
 
                 # else, move on
                 # edge case of empty name - occurs for some bugs.
-                first_name = new_mem.first_name or "PersonWithNoName"
-
+                first_name = f"[{escape_markdown(new_mem.first_name)}](tg://user?id={user.id})"
+              
                 if cust_welcome:
                     if cust_welcome == sql.DEFAULT_WELCOME:
                         cust_welcome = random.choice(
@@ -304,7 +304,8 @@ def left_member(update: Update, context: CallbackContext):
                 return
 
             # edge case of empty name - occurs for some bugs.
-            first_name = left_mem.first_name or "PersonWithNoName"
+            first_name = f"[{escape_markdown(new_mem.first_name)}](tg://user?id={user.id})"
+              
             if cust_goodbye:
                 if cust_goodbye == sql.DEFAULT_GOODBYE:
                     cust_goodbye = random.choice(

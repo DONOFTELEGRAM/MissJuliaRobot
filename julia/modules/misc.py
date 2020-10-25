@@ -1028,7 +1028,7 @@ def gdpr(update: Update, context: CallbackContext):
 
 
 MARKDOWN_HELP = """
-Markdown is a very powerful formatting tool supported by telegram. Alexa has some enhancements, to make sure that \
+Markdown is a very powerful formatting tool supported by telegram. Julia has some enhancements, to make sure that \
 saved messages are correctly parsed, and to allow you to create buttons.
 • <code>_italic_</code>: wrapping text with '_' will produce italic text
 • <code>*bold*</code>: wrapping text with '*' will produce bold text
@@ -1725,7 +1725,7 @@ async def apk(e):
                 " stars", "", 1).replace(" stars", "⭐ ").replace("five", "5")
         app_details += ("\n<code>Features :</code> <a href='" + app_link +
                         "'>View in Play Store</a>")
-        app_details += "\n\n===> @AlexaFamilyBot <==="
+        app_details += "\n\n===> @JuliaFamilyBot <==="
         await e.reply(app_details, link_preview=True, parse_mode="HTML")
     except IndexError:
         await e.reply(
@@ -1938,7 +1938,7 @@ async def parse_ocr_space_api(event):
             int(test_file["ProcessingTimeInMilliseconds"]) // 1000)
     except Exception as e:
         await event.reply(
-            "Error :\n `{}`\nReport This to @AlexaSupport\n\n`{}`".format(
+            "Error :\n `{}`\nReport This to @JuliaSupport\n\n`{}`".format(
                 str(e), json.dumps(test_file, sort_keys=True, indent=4)))
     else:
         await event.reply("Read Document in {} seconds. \n{}".format(
@@ -1976,7 +1976,7 @@ async def _(event):
     start = datetime.datetime.now()
     if not os.path.isdir(TEMP_DOWNLOAD_DIRECTORY):
         os.makedirs(TEMP_DOWNLOAD_DIRECTORY)
-    await event.reply("Downloading to Alexa's server for Analysis ...")
+    await event.reply("Downloading to Julia's server for Analysis ...")
     if event.reply_to_msg_id:
         previous_message = await event.get_reply_message()
         required_file_name = await event.client.download_media(
@@ -2164,7 +2164,7 @@ def lyrics(update: Update, context: CallbackContext):
             msg.reply_text(reply)
 
 
-# Made by @MissAlexa_Robot
+# Made by @MissJulia_Robot
 
 
 @register(pattern=r"^/julia(?: |$)([\s\S]*)")
@@ -2270,7 +2270,7 @@ async def _(event):
 
 
 telegraph = Telegraph()
-telegraph.create_account(short_name="Alexa")
+telegraph.create_account(short_name="Julia")
 
 
 @register(pattern="^/torrent (.*)")
@@ -3267,7 +3267,7 @@ async def sticklet(event):
                         fill=(R, G, B))
 
     image_stream = io.BytesIO()
-    image_stream.name = "@Alexa.webp"
+    image_stream.name = "@Julia.webp"
     image.save(image_stream, "WebP")
     image_stream.seek(0)
 
@@ -3657,7 +3657,7 @@ async def inline_query(client, bot, query):
 
 ## -- THANKS TO LONAMI FOR THIS FUNCTION --#
 
-# -- MADE BY @MissAlexa_Robot
+# -- MADE BY @MissJulia_Robot
 
 
 @juliabot(pattern="^/gameed")
@@ -4012,7 +4012,7 @@ async def can_change_info(message):
 
 # ------ THANKS TO LONAMI ------#
 
-# MADE BY @MissAlexa_Robot
+# MADE BY @MissJulia_Robot
 
 
 @register(pattern="^/profanity(?: |$)(.*)")

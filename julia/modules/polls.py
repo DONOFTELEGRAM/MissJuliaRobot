@@ -663,7 +663,7 @@
 __mod_name__ = "Polls 🎲"
 
 __help__ = """
-You can now send polls anonymously with Alexa
+You can now send polls anonymously with Julia
 
 Here is how you can do it:
 

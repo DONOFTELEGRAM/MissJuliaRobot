@@ -667,7 +667,7 @@ __help__ = """
  - /julia: Reply to a voice query and get the results in voice output
 
 *Terminal Assistant*
- - /howdoi: Get all coding related answers from Alexa. Syntax: `/howdoi print hello world in python`
+ - /howdoi: Get all coding related answers from Julia. Syntax: `/howdoi print hello world in python`
 
 *NOTE*
 The question should be a meaningful one otherwise you will get no response !

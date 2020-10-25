@@ -660,7 +660,7 @@
 #     For more information on this, and how to apply and follow the GNU AGPL, see
 #     <https://www.gnu.org/licenses/>.
 
-# MADE BY @MissAlexa_Robot
+# MADE BY @MissJulia_Robot
 # He has wasted a lot of time of his life to make this so please give
 # proper credits to him 😭
 

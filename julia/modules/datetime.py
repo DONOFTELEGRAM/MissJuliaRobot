@@ -3,9 +3,8 @@ from typing import List
 
 import requests
 from julia import TIME_API_KEY, dispatcher
-from julia.modules.disable import DisableAbleCommandHandler
 from telegram import ParseMode, Update
-from telegram.ext import CallbackContext, run_async
+from telegram.ext import CallbackContext, run_async, CommandHandler
 from julia.modules.helper_funcs.chat_status import user_admin
 
 
@@ -83,3 +82,6 @@ def gettime(update: Update, context: CallbackContext):
         return
 
     send_message.edit_text(result, parse_mode=ParseMode.HTML)
+
+TIME_HANDLER = CommandHandler("datetime", gettime)
+dispatcher.add_handler(TIME_HANDLER)

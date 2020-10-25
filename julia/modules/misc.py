@@ -4152,13 +4152,14 @@ async def sticklet(event):
 
 @register(pattern="")
 async def spam_update(event):
+    if not event:
+        return
     if event.fwd_from:
         return
     if event.is_private:
         return
     if MONGO_DB_URI is None:
         return
-    msg = str(event.text)
     sender = await event.get_sender()
     chats = spammers.find({})
     for c in chats:
@@ -4306,7 +4307,7 @@ async def _(event):
     else:
         evaluation = "Success 😃"
 
-    final_output = "{}\n\n **OUTPUT**: \n`{}` \n".format(
+    final_output = "**OUTPUT**: \n`{}` \n".format(
         cmd, evaluation)
     MAX_MESSAGE_SIZE_LIMIT = 4095
     if len(final_output) > MAX_MESSAGE_SIZE_LIMIT:
@@ -4322,7 +4323,7 @@ async def _(event):
             )
 
     else:
-        await event.edit(final_output)
+        await event.reply(final_output)
 
 
 __help__ = """

@@ -664,11 +664,14 @@ import threading
 
 from sqlalchemy import Column, String, Boolean, UnicodeText, Integer, BigInteger
 
-from lynda.modules.helper_funcs.msg_types import Types
-from lynda.modules.sql import SESSION, BASE
+from julia.modules.helper_funcs.msg_types import Types
+from julia.modules.sql import SESSION, BASE
 
-DEFAULT_WELCOME_MESSAGES = 'Hey {first}, how are you?'
-DEFAULT_GOODBYE_MESSAGES = 'Bye {first}, nice knowing you!'
+DEFAULT_WELCOME_MESSAGES = ['Hey {first}, how are you?']
+DEFAULT_GOODBYE_MESSAGES = ['Bye {first}, nice knowing you!']
+
+DEFAULT_WELCOME = 'Hey {first}, how are you?'
+DEFAULT_GOODBYE = 'Bye {first}, nice knowing you!'
 
 class Welcome(BASE):
     __tablename__ = "welcome_pref"

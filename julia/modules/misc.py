@@ -3684,7 +3684,7 @@ async def ramdomgamess(event):
         else:
             return
 
-    chat = "@MissAlexa_Robot"
+    chat = "@MissJulia_Robot"
     async with event.client.conversation(chat) as conv:
         try:
             response = conv.wait_event(
@@ -3720,7 +3720,7 @@ async def ramdomgamess(event):
             pass
         else:
             return
-    chat = "@MissAlexa_Robot"
+    chat = "@MissJulia_Robot"
     async with event.client.conversation(chat) as conv:
         try:
             response = conv.wait_event(
@@ -3757,7 +3757,7 @@ async def ramdomgamess(event):
             pass
         else:
             return
-    chat = "@MissAlexa_Robot"
+    chat = "@MissJulia_Robot"
     async with event.client.conversation(chat) as conv:
         try:
             response = conv.wait_event(
@@ -3793,7 +3793,7 @@ async def ramdomgamess(event):
             pass
         else:
             return
-    chat = "@MissAlexa_Robot"
+    chat = "@MissJulia_Robot"
     async with event.client.conversation(chat) as conv:
         try:
             response = conv.wait_event(
@@ -3830,7 +3830,7 @@ async def ramdomgamess(event):
             pass
         else:
             return
-    chat = "@MissAlexa_Robot"
+    chat = "@MissJulia_Robot"
     async with event.client.conversation(chat) as conv:
         try:
             response = conv.wait_event(
@@ -3867,7 +3867,7 @@ async def ramdomgamess(event):
             pass
         else:
             return
-    chat = "@MissAlexa_Robot"
+    chat = "@MissJulia_Robot"
     async with event.client.conversation(chat) as conv:
         try:
             response = conv.wait_event(
@@ -3904,7 +3904,7 @@ async def ramdomgamess(event):
             pass
         else:
             return
-    chat = "@MissAlexa_Robot"
+    chat = "@MissJulia_Robot"
     async with event.client.conversation(chat) as conv:
         try:
             response = conv.wait_event(
@@ -3941,7 +3941,7 @@ async def ramdomgamess(event):
             pass
         else:
             return
-    chat = "@MissAlexa_Robot"
+    chat = "@MissJulia_Robot"
     async with event.client.conversation(chat) as conv:
         try:
             response = conv.wait_event(
@@ -3978,7 +3978,7 @@ async def ramdomgamess(event):
             pass
         else:
             return
-    chat = "@MissAlexa_Robot"
+    chat = "@MissJulia_Robot"
     async with event.client.conversation(chat) as conv:
         try:
             response = conv.wait_event(

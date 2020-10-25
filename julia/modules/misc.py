@@ -1465,16 +1465,6 @@ async def figlet(event):
     await event.respond("`{}`".format(result))
 
 
-@contextmanager
-def cwd(path):
-    oldpwd = os.getcwd()
-    os.chdir(path)
-    try:
-        yield
-    finally:
-        os.chdir(oldpwd)
-
-
 @register(pattern="^/img (.*)")
 async def img_sampler(event):
     if event.fwd_from:
@@ -1938,7 +1928,7 @@ async def parse_ocr_space_api(event):
             int(test_file["ProcessingTimeInMilliseconds"]) // 1000)
     except Exception as e:
         await event.reply(
-            "Error :\n `{}`\nReport This to @JuliaSupport\n\n`{}`".format(
+            "Error :\n `{}`\nReport This to @MissJuliaSupport\n\n`{}`".format(
                 str(e), json.dumps(test_file, sort_keys=True, indent=4)))
     else:
         await event.reply("Read Document in {} seconds. \n{}".format(

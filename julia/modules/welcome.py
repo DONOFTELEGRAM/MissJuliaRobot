@@ -1370,7 +1370,7 @@ def user_button(update, context):
     join_user = int(match.group(1))
 
     if join_user == user.id:
-        query.answer(text="Yus! You're a human, Unmuted!")
+        query.answer(text="Yes! You're a human, Unmuted!")
         context.bot.restrict_chat_member(
             chat.id,
             user.id,

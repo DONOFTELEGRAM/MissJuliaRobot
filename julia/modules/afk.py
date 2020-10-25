@@ -673,13 +673,13 @@ from telegram.ext import Filters
 from telegram.ext import MessageHandler
 from telegram.ext import run_async
 
-from alexa import dispatcher
-from alexa.modules.disable import DisableAbleCommandHandler
+from julia import dispatcher
+from julia.modules.disable import DisableAbleCommandHandler
 from alexa.modules.disable import DisableAbleMessageHandler
-from alexa.modules.helper_funcs.alternate import send_message
-from alexa.modules.helper_funcs.chat_status import user_admin
-from alexa.modules.sql import afk_sql as sql
-from alexa.modules.users import get_user_id
+from julia.modules.helper_funcs.alternate import send_message
+from julia.modules.helper_funcs.chat_status import user_admin
+from julia.modules.sql import afk_sql as sql
+from julia.modules.users import get_user_id
 from telegram.ext import CallbackContext, Filters, MessageHandler, run_async
 from telegram import MessageEntity, Update
 

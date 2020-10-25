@@ -666,8 +666,8 @@ from sqlalchemy import Column
 from sqlalchemy import Integer
 from sqlalchemy import UnicodeText
 
-from alexa.modules.sql import BASE
-from alexa.modules.sql import SESSION
+from julia.modules.sql import BASE
+from julia.modules.sql import SESSION
 
 
 class AFK(BASE):

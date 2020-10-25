@@ -4330,7 +4330,6 @@ PASTE_STATS_HANDLER = CommandHandler("pastestats",
                                      get_paste_stats,
                                      pass_args=True)
 LYRICS_HANDLER = CommandHandler("lyrics", lyrics, pass_args=True)
-TIME_HANDLER = CommandHandler("datetime", gettime)
 STATS_HANDLER = CommandHandler("stats", stats, filters=Filters.user(OWNER_ID))
 UD_HANDLER = CommandHandler("define", define)
 SYNO_HANDLER = CommandHandler("synonym", synonyms)
@@ -4339,7 +4338,6 @@ PING_HANDLER = CommandHandler("ping", ping)
 
 dispatcher.add_handler(PING_HANDLER)
 dispatcher.add_handler(STATS_HANDLER)
-dispatcher.add_handler(TIME_HANDLER)
 dispatcher.add_handler(PASTE_HANDLER)
 dispatcher.add_handler(GET_PASTE_HANDLER)
 dispatcher.add_handler(PASTE_STATS_HANDLER)

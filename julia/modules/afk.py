@@ -674,10 +674,7 @@ from telegram.ext import MessageHandler
 from telegram.ext import run_async
 
 from julia import dispatcher
-from julia.modules.disable import DisableAbleCommandHandler
-from alexa.modules.disable import DisableAbleMessageHandler
 from julia.modules.helper_funcs.alternate import send_message
-from julia.modules.helper_funcs.chat_status import user_admin
 from julia.modules.sql import afk_sql as sql
 from julia.modules.users import get_user_id
 from telegram.ext import CallbackContext, Filters, MessageHandler, run_async

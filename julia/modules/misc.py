@@ -1725,7 +1725,7 @@ async def apk(e):
                 " stars", "", 1).replace(" stars", "⭐ ").replace("five", "5")
         app_details += ("\n<code>Features :</code> <a href='" + app_link +
                         "'>View in Play Store</a>")
-        app_details += "\n\n===> @JuliaFamilyBot <==="
+        app_details += "\n\n===> @MissJuliaRobot <==="
         await e.reply(app_details, link_preview=True, parse_mode="HTML")
     except IndexError:
         await e.reply(

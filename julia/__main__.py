@@ -1224,12 +1224,12 @@ def main():
             tbot.disconnect()
         else:
             tbot.run_until_disconnected()
-        LOGGER.info("Successfully Started Alexa !")
+        LOGGER.info("Successfully Started Julia !")
     updater.idle()
 
 
 if __name__ == "__main__":
     LOGGER.info("Successfully loaded modules: ", str(ALL_MODULES))
     tbot.start(bot_token=TOKEN)
-    LOGGER.info("Successfully started Alexa !")
+    LOGGER.info("Successfully started Julia !")
     main()

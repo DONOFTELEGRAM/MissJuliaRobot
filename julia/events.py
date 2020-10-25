@@ -795,7 +795,7 @@ def juliabot(**args):
                     date = strftime("%Y-%m-%d %H:%M:%S", gmtime())
 
                     text = "**Sorry, I encountered a error!**\n"
-                    link = "[https://t.me/MissAlexaRobotSupport](Support Chat)"
+                    link = "[https://t.me/MissJuliaRobotSupport](Support Chat)"
                     text += "If you wanna you can report it"
                     text += f"- just forward this message to {link}.\n"
                     text += "I won't log anything except the fact of error and date\n"

@@ -1418,11 +1418,26 @@ WELC_HELP_TXT = (
         dispatcher.bot.username))
 
 
+WELC_MUTE_HELP_TXT = (
+    "You can get the bot to mute new people who join your group and hence prevent spambots from flooding your group. "
+    "The following options are possible:\n"
+    "• `/welcomemute soft`*:* restricts new members from sending media for 24 hours.\n"
+    "• `/welcomemute strong`*:* mutes new members till they tap on a button thereby verifying they're human.\n"
+    "• `/welcomemute off`*:* turns off welcomemute.\n"
+    "*Note:* Strong mode kicks a user from the chat if they dont verify in 120seconds. They can always rejoin though"
+)
+
 @run_async
 @user_can_change
 def welcome_help(update, context):
     update.effective_message.reply_text(WELC_HELP_TXT,
                                         parse_mode=ParseMode.MARKDOWN)
+
+@run_async
+@user_can_change
+def welcome_mute_help(update: Update, context: CallbackContext):
+    update.effective_message.reply_text(
+        WELC_MUTE_HELP_TXT, parse_mode=ParseMode.MARKDOWN)
 
 
 # TODO: get welcome data from group butler snap
@@ -1489,6 +1504,7 @@ CLEAN_SERVICE_HANDLER = CommandHandler("cleanservice",
                                        pass_args=True,
                                        filters=Filters.group)
 WELCOME_HELP = CommandHandler("welcomehelp", welcome_help)
+WELCOME_MUTE_HELP = CommandHandler("welcomemutehelp", welcome_mute_help)
 BUTTON_VERIFY_HANDLER = CallbackQueryHandler(user_button,
                                              pattern=r"user_join_")
 
@@ -1505,3 +1521,4 @@ dispatcher.add_handler(WELCOMEMUTE_HANDLER)
 dispatcher.add_handler(CLEAN_SERVICE_HANDLER)
 dispatcher.add_handler(BUTTON_VERIFY_HANDLER)
 dispatcher.add_handler(WELCOME_HELP)
+dispatcher.add_handler(WELCOME_MUTE_HELP)

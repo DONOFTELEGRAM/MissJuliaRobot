@@ -668,6 +668,7 @@ from telegram import Chat
 from telegram import InlineKeyboardButton
 from telegram import InlineKeyboardMarkup
 from telegram import Message
+from telegram.ext import BaseFilter
 from telegram import ParseMode
 from telegram import User
 from telegram.error import BadRequest
@@ -691,13 +692,17 @@ from julia.modules.helper_funcs.extraction import extract_user
 from julia.modules.helper_funcs.extraction import extract_user_and_text
 from julia.modules.helper_funcs.misc import split_message
 from julia.modules.helper_funcs.string_handling import split_quotes
-from julia.modules.helper_funcs.filters import CustomFilters
 from julia.modules.log_channel import loggable
 from julia.modules.sql import warns_sql as sql
 
 WARN_HANDLER_GROUP = 9
 CURRENT_WARNING_FILTER_STRING = "<b>Current warning filters in this chat:</b>\n"
 
+class HasText(BaseFilter):
+        def filter(self, message: Message):
+            return bool(message.text or message.sticker or message.photo or
+                        message.document or message.video)
+has_text = _HasText()
 
 # Not async
 def warn(user: User,
@@ -1192,7 +1197,8 @@ LIST_WARN_HANDLER = CommandHandler(["warnlist", "warnfilters"],
                                    list_warn_filters,
                                    filters=Filters.group,
                                    admin_ok=True)
-WARN_FILTER_HANDLER = MessageHandler(CustomFilters.has_text & Filters.group,
+                                          
+WARN_FILTER_HANDLER = MessageHandler(has_text & Filters.group,
                                      reply_filter)
 WARN_LIMIT_HANDLER = CommandHandler("warnlimit",
                                     set_warn_limit,

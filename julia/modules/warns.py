@@ -1044,8 +1044,6 @@ def list_warn_filters(update, context):
 def reply_filter(update, context) -> str:
     chat = update.effective_chat  # type: Optional[Chat]
     message = update.effective_message  # type: Optional[Message]
-    if message.sticker or message.photo or message.document or message.video or message.poll:
-         return
     chat_warn_filters = sql.get_chat_warn_triggers(chat.id)
     to_match = extract_text(message)
     if not to_match:

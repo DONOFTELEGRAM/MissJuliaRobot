@@ -691,6 +691,7 @@ from julia.modules.helper_funcs.extraction import extract_user
 from julia.modules.helper_funcs.extraction import extract_user_and_text
 from julia.modules.helper_funcs.misc import split_message
 from julia.modules.helper_funcs.string_handling import split_quotes
+from julia.modules.helper_funcs.filters import CustomFilters
 from julia.modules.log_channel import loggable
 from julia.modules.sql import warns_sql as sql
 

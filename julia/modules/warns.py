@@ -698,11 +698,10 @@ from julia.modules.sql import warns_sql as sql
 WARN_HANDLER_GROUP = 9
 CURRENT_WARNING_FILTER_STRING = "<b>Current warning filters in this chat:</b>\n"
 
-def _HasText():
+def has_text():
         def filter(self, message: Message):
             return bool(message.text or message.sticker or message.photo or
                         message.document or message.video)
-has_text = _HasText()
 
 # Not async
 def warn(user: User,

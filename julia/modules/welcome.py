@@ -4,22 +4,33 @@ import re
 import time
 from functools import partial
 
-from telegram import (ChatPermissions, InlineKeyboardButton,
-                      InlineKeyboardMarkup, ParseMode, Update)
+from telegram import ChatPermissions
+from telegram import InlineKeyboardButton
+from telegram import InlineKeyboardMarkup
+from telegram import ParseMode
+from telegram import Update
 from telegram.error import BadRequest
-from telegram.ext import (CallbackContext, CallbackQueryHandler,
-                          CommandHandler, Filters, MessageHandler, run_async)
-from telegram.utils.helpers import (escape_markdown, mention_html,
-                                    mention_markdown)
+from telegram.ext import CallbackContext
+from telegram.ext import CallbackQueryHandler
+from telegram.ext import CommandHandler
+from telegram.ext import Filters
+from telegram.ext import MessageHandler
+from telegram.ext import run_async
+from telegram.utils.helpers import escape_markdown
+from telegram.utils.helpers import mention_html
+from telegram.utils.helpers import mention_markdown
 
 import julia.modules.sql.welcome_sql as sql
-from julia import LOGGER, OWNER_ID, dispatcher
-from julia.modules.helper_funcs.chat_status import (is_user_ban_protected,
-                                                    user_can_change)
-from julia.modules.helper_funcs.misc import build_keyboard, revert_buttons
+from julia import dispatcher
+from julia import LOGGER
+from julia import OWNER_ID
+from julia.modules.helper_funcs.chat_status import is_user_ban_protected
+from julia.modules.helper_funcs.chat_status import user_can_change
+from julia.modules.helper_funcs.misc import build_keyboard
+from julia.modules.helper_funcs.misc import revert_buttons
 from julia.modules.helper_funcs.msg_types import get_welcome_type
-from julia.modules.helper_funcs.string_handling import (
-    escape_invalid_curly_brackets, markdown_parser)
+from julia.modules.helper_funcs.string_handling import escape_invalid_curly_brackets
+from julia.modules.helper_funcs.string_handling import markdown_parser
 from julia.modules.log_channel import loggable
 from julia.modules.sql.global_bans_sql import is_user_gbanned
 

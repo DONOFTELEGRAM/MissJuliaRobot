@@ -692,6 +692,7 @@ from julia.modules.helper_funcs.extraction import extract_user
 from julia.modules.helper_funcs.extraction import extract_user_and_text
 from julia.modules.helper_funcs.misc import split_message
 from julia.modules.helper_funcs.string_handling import split_quotes
+from julia.modules.helper_funcs.filters import CustomFilters
 from julia.modules.log_channel import loggable
 from julia.modules.sql import warns_sql as sql
 
@@ -1192,9 +1193,10 @@ LIST_WARN_HANDLER = CommandHandler(["warnlist", "warnfilters"],
                                    list_warn_filters,
                                    filters=Filters.group,
                                    admin_ok=True)
-                                          
-WARN_FILTER_HANDLER = MessageHandler(Filters.group,
-                                     reply_filter)
+
+WARN_FILTER_HANDLER = MessageHandler(CustomFilters.has_text & Filters.group,
+                                     reply_filter)                                          
+
 WARN_LIMIT_HANDLER = CommandHandler("warnlimit",
                                     set_warn_limit,
                                     pass_args=True,

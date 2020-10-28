@@ -9,7 +9,7 @@ opencv-python-headless
 scikit-image
 argparse
 imutils
-python-telegram-bot==12.1.0
+python-telegram-bot
 telethon
 aiohttp
 bleach

@@ -698,11 +698,6 @@ from julia.modules.sql import warns_sql as sql
 WARN_HANDLER_GROUP = 9
 CURRENT_WARNING_FILTER_STRING = "<b>Current warning filters in this chat:</b>\n"
 
-def has_text():
-        def filter(self, message: Message):
-            return bool(message.text or message.sticker or message.photo or
-                        message.document or message.video)
-
 # Not async
 def warn(user: User,
          chat: Chat,
@@ -1048,7 +1043,8 @@ def list_warn_filters(update, context):
 def reply_filter(update, context) -> str:
     chat = update.effective_chat  # type: Optional[Chat]
     message = update.effective_message  # type: Optional[Message]
-
+    if message.sticker or message.photo or message.document or message.video or message.poll:
+         return
     chat_warn_filters = sql.get_chat_warn_triggers(chat.id)
     to_match = extract_text(message)
     if not to_match:
@@ -1197,7 +1193,7 @@ LIST_WARN_HANDLER = CommandHandler(["warnlist", "warnfilters"],
                                    filters=Filters.group,
                                    admin_ok=True)
                                           
-WARN_FILTER_HANDLER = MessageHandler(has_text & Filters.group,
+WARN_FILTER_HANDLER = MessageHandler(Filters.group,
                                      reply_filter)
 WARN_LIMIT_HANDLER = CommandHandler("warnlimit",
                                     set_warn_limit,

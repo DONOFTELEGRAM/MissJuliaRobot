@@ -3,38 +3,36 @@ import random
 import re
 import time
 from functools import partial
-from julia import (LOGGER, OWNER_ID, dispatcher)
+
+from telegram import ChatPermissions
+from telegram import InlineKeyboardButton
+from telegram import InlineKeyboardMarkup
+from telegram import ParseMode
+from telegram import Update
+from telegram.error import BadRequest
+from telegram.ext import CallbackContext
+from telegram.ext import CallbackQueryHandler
+from telegram.ext import CommandHandler
+from telegram.ext import Filters
+from telegram.ext import MessageHandler
+from telegram.ext import run_async
+from telegram.utils.helpers import escape_markdown
+from telegram.utils.helpers import mention_html
+from telegram.utils.helpers import mention_markdown
 
 import julia.modules.sql.welcome_sql as sql
-from julia.modules.helper_funcs.chat_status import (
-    is_user_ban_protected,
-    user_can_change,
-)
-from julia.modules.helper_funcs.misc import build_keyboard, revert_buttons
+from julia import dispatcher
+from julia import LOGGER
+from julia import OWNER_ID
+from julia.modules.helper_funcs.chat_status import is_user_ban_protected
+from julia.modules.helper_funcs.chat_status import user_can_change
+from julia.modules.helper_funcs.misc import build_keyboard
+from julia.modules.helper_funcs.misc import revert_buttons
 from julia.modules.helper_funcs.msg_types import get_welcome_type
-from julia.modules.helper_funcs.string_handling import (
-    escape_invalid_curly_brackets,
-    markdown_parser,
-)
+from julia.modules.helper_funcs.string_handling import escape_invalid_curly_brackets
+from julia.modules.helper_funcs.string_handling import markdown_parser
 from julia.modules.log_channel import loggable
 from julia.modules.sql.global_bans_sql import is_user_gbanned
-from telegram import (
-    ChatPermissions,
-    InlineKeyboardButton,
-    InlineKeyboardMarkup,
-    ParseMode,
-    Update,
-)
-from telegram.error import BadRequest
-from telegram.ext import (
-    CallbackContext,
-    CallbackQueryHandler,
-    CommandHandler,
-    Filters,
-    MessageHandler,
-    run_async,
-)
-from telegram.utils.helpers import escape_markdown, mention_html, mention_markdown
 
 VALID_WELCOME_FORMATTERS = [
     "first",
@@ -92,10 +90,11 @@ def send(update, message, keyboard, backup_message):
             )
         elif excp.message == "Unsupported url protocol":
             msg = update.effective_message.reply_text(
-                markdown_parser(backup_message +
-                                "\nNote: the current message has buttons which "
-                                "use url protocols that are unsupported by "
-                                "telegram. Please update."),
+                markdown_parser(
+                    backup_message +
+                    "\nNote: the current message has buttons which "
+                    "use url protocols that are unsupported by "
+                    "telegram. Please update."),
                 parse_mode=ParseMode.MARKDOWN,
                 reply_to_message_id=reply,
             )
@@ -166,19 +165,19 @@ def new_member(update: Update, context: CallbackContext):
             if new_mem.id == OWNER_ID:
                 update.effective_message.reply_text(
                     "My Master has joined the chat 😍\n\nStay Careful !",
-                    reply_to_message_id=reply)
+                    reply_to_message_id=reply,
+                )
                 welcome_log = (f"{html.escape(chat.title)}\n"
                                f"#USER_JOINED\n"
                                f"Bot Owner just joined the chat")
                 continue
-
 
             # Welcome yourself
             if new_mem.id == bot.id:
                 creator = None
                 for x in bot.bot.get_chat_administrators(
                         update.effective_chat.id):
-                    if x.status == 'creator':
+                    if x.status == "creator":
                         creator = x.user
                         break
                 if creator:
@@ -186,15 +185,17 @@ def new_member(update: Update, context: CallbackContext):
                         MESSAGE_DUMP,
                         "#NEW_GROUP\n<b>Group name:</b> {}\n<b>ID:</b> <code>{}</code>\n<b>Creator:</b> <code>{}</code>"
                         .format(chat.title, chat.id, creator),
-                        parse_mode=ParseMode.HTML)
+                        parse_mode=ParseMode.HTML,
+                    )
                 else:
                     bot.send_message(
                         MESSAGE_DUMP,
                         "#NEW_GROUP\n<b>Group name:</b> {}\n<b>ID:</b> <code>{}</code>"
                         .format(chat.title, chat.id),
-                        parse_mode=ParseMode.HTML)
-                update.effective_message.reply_text(
-                    "Watashi ga kita!", reply_to_message_id=reply)
+                        parse_mode=ParseMode.HTML,
+                    )
+                update.effective_message.reply_text("Watashi ga kita!",
+                                                    reply_to_message_id=reply)
                 continue
             buttons = sql.get_welc_buttons(chat.id)
             keyb = build_keyboard(buttons)
@@ -202,9 +203,8 @@ def new_member(update: Update, context: CallbackContext):
             if welc_type not in (sql.Types.TEXT, sql.Types.BUTTON_TEXT):
                 media_wel = True
 
-            first_name = (
-                new_mem.first_name or "PersonWithNoName"
-            )  # edge case of empty name - occurs for some bugs.
+            first_name = (new_mem.first_name or "PersonWithNoName"
+                          )  # edge case of empty name - occurs for some bugs.
 
             if cust_welcome:
                 if cust_welcome == sql.DEFAULT_WELCOME:
@@ -256,8 +256,8 @@ def new_member(update: Update, context: CallbackContext):
             reply = None
 
         # User exceptions from welcomemutes
-        if (is_user_ban_protected(chat, new_mem.id, chat.get_member(new_mem.id))
-                or human_checks):
+        if (is_user_ban_protected(chat, new_mem.id, chat.get_member(
+                new_mem.id)) or human_checks):
             should_mute = False
         # Join welcome: soft mute
         if new_mem.is_bot:
@@ -419,7 +419,6 @@ def left_member(update: Update, context: CallbackContext):
         left_mem = update.effective_message.left_chat_member
         if left_mem:
 
-
             # Dont say goodbyes to gbanned users
             if is_user_gbanned(left_mem.id):
                 return
@@ -440,7 +439,7 @@ def left_member(update: Update, context: CallbackContext):
                 return
 
             first_name = (left_mem.first_name or "PersonWithNoName"
-                         )  # edge case of empty name - occurs for some bugs.
+                          )  # edge case of empty name - occurs for some bugs.
             if cust_goodbye:
                 if cust_goodbye == sql.DEFAULT_GOODBYE:
                     cust_goodbye = random.choice(
@@ -497,7 +496,8 @@ def welcome(update: Update, context: CallbackContext):
     # if no args, show current replies.
     if not args or args[0].lower() == "noformat":
         noformat = True
-        pref, welcome_m, cust_content, welcome_type = sql.get_welc_pref(chat.id)
+        pref, welcome_m, cust_content, welcome_type = sql.get_welc_pref(
+            chat.id)
         update.effective_message.reply_text(
             f"This chat has it's welcome setting set to: `{pref}`.\n"
             f"*The welcome message (not filling the {{}}) is:*",
@@ -519,8 +519,9 @@ def welcome(update: Update, context: CallbackContext):
             buttons = sql.get_welc_buttons(chat.id)
             if noformat:
                 welcome_m += revert_buttons(buttons)
-                ENUM_FUNC_MAP[welcome_type](
-                    chat.id, cust_content, caption=welcome_m)
+                ENUM_FUNC_MAP[welcome_type](chat.id,
+                                            cust_content,
+                                            caption=welcome_m)
 
             else:
                 keyb = build_keyboard(buttons)
@@ -582,8 +583,9 @@ def goodbye(update: Update, context: CallbackContext):
                 ENUM_FUNC_MAP[goodbye_type](chat.id, goodbye_m)
 
             else:
-                ENUM_FUNC_MAP[goodbye_type](
-                    chat.id, goodbye_m, parse_mode=ParseMode.MARKDOWN)
+                ENUM_FUNC_MAP[goodbye_type](chat.id,
+                                            goodbye_m,
+                                            parse_mode=ParseMode.MARKDOWN)
 
     elif len(args) >= 1:
         if args[0].lower() in ("on", "yes"):
@@ -699,7 +701,8 @@ def welcomemute(update: Update, context: CallbackContext) -> str:
         elif args[0].lower() in ["soft"]:
             sql.set_welcome_mutes(chat.id, "soft")
             msg.reply_text(
-                "I will restrict users' permission to send media for 24 hours.")
+                "I will restrict users' permission to send media for 24 hours."
+            )
             return (
                 f"<b>{html.escape(chat.title)}:</b>\n"
                 f"#WELCOME_MUTE\n"
@@ -790,8 +793,8 @@ def cleanservice(update: Update, context: CallbackContext) -> str:
                 update.effective_message.reply_text(
                     "Invalid option", parse_mode=ParseMode.MARKDOWN)
         else:
-            update.effective_message.reply_text(
-                "Usage is on/yes or off/no", parse_mode=ParseMode.MARKDOWN)
+            update.effective_message.reply_text("Usage is on/yes or off/no",
+                                                parse_mode=ParseMode.MARKDOWN)
     else:
         curr = sql.clean_service(chat.id)
         if curr:
@@ -799,7 +802,8 @@ def cleanservice(update: Update, context: CallbackContext) -> str:
                 "Welcome clean service is : on", parse_mode=ParseMode.MARKDOWN)
         else:
             update.effective_message.reply_text(
-                "Welcome clean service is : off", parse_mode=ParseMode.MARKDOWN)
+                "Welcome clean service is : off",
+                parse_mode=ParseMode.MARKDOWN)
 
 
 @run_async
@@ -901,15 +905,15 @@ WELC_MUTE_HELP_TXT = (
 @run_async
 @user_can_change
 def welcome_help(update: Update, context: CallbackContext):
-    update.effective_message.reply_text(
-        WELC_HELP_TXT, parse_mode=ParseMode.MARKDOWN)
+    update.effective_message.reply_text(WELC_HELP_TXT,
+                                        parse_mode=ParseMode.MARKDOWN)
 
 
 @run_async
 @user_can_change
 def welcome_mute_help(update: Update, context: CallbackContext):
-    update.effective_message.reply_text(
-        WELC_MUTE_HELP_TXT, parse_mode=ParseMode.MARKDOWN)
+    update.effective_message.reply_text(WELC_MUTE_HELP_TXT,
+                                        parse_mode=ParseMode.MARKDOWN)
 
 
 # TODO: get welcome data from group butler snap
@@ -955,22 +959,30 @@ NEW_MEM_HANDLER = MessageHandler(Filters.status_update.new_chat_members,
 LEFT_MEM_HANDLER = MessageHandler(Filters.status_update.left_chat_member,
                                   left_member)
 WELC_PREF_HANDLER = CommandHandler("welcome", welcome, filters=Filters.group)
-GOODBYE_PREF_HANDLER = CommandHandler("goodbye", goodbye, filters=Filters.group)
+GOODBYE_PREF_HANDLER = CommandHandler("goodbye",
+                                      goodbye,
+                                      filters=Filters.group)
 SET_WELCOME = CommandHandler("setwelcome", set_welcome, filters=Filters.group)
 SET_GOODBYE = CommandHandler("setgoodbye", set_goodbye, filters=Filters.group)
-RESET_WELCOME = CommandHandler(
-    "resetwelcome", reset_welcome, filters=Filters.group)
-RESET_GOODBYE = CommandHandler(
-    "resetgoodbye", reset_goodbye, filters=Filters.group)
-WELCOMEMUTE_HANDLER = CommandHandler(
-    "welcomemute", welcomemute, filters=Filters.group)
-CLEAN_SERVICE_HANDLER = CommandHandler(
-    "cleanservice", cleanservice, filters=Filters.group)
-CLEAN_WELCOME = CommandHandler(
-    "cleanwelcome", clean_welcome, filters=Filters.group)
+RESET_WELCOME = CommandHandler("resetwelcome",
+                               reset_welcome,
+                               filters=Filters.group)
+RESET_GOODBYE = CommandHandler("resetgoodbye",
+                               reset_goodbye,
+                               filters=Filters.group)
+WELCOMEMUTE_HANDLER = CommandHandler("welcomemute",
+                                     welcomemute,
+                                     filters=Filters.group)
+CLEAN_SERVICE_HANDLER = CommandHandler("cleanservice",
+                                       cleanservice,
+                                       filters=Filters.group)
+CLEAN_WELCOME = CommandHandler("cleanwelcome",
+                               clean_welcome,
+                               filters=Filters.group)
 WELCOME_HELP = CommandHandler("welcomehelp", welcome_help)
 WELCOME_MUTE_HELP = CommandHandler("welcomemutehelp", welcome_mute_help)
-BUTTON_VERIFY_HANDLER = CallbackQueryHandler(user_button, pattern=r"user_join_")
+BUTTON_VERIFY_HANDLER = CallbackQueryHandler(user_button,
+                                             pattern=r"user_join_")
 
 dispatcher.add_handler(NEW_MEM_HANDLER)
 dispatcher.add_handler(LEFT_MEM_HANDLER)

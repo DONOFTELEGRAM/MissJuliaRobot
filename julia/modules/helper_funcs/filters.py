@@ -663,8 +663,7 @@
 
 from julia import SUDO_USERS, SUPPORT_USERS
 from telegram import Message
-from telegram.ext import BaseFilter
-from 
+from telegram.ext import BaseFilter 
 
 
 class CustomFilters():
@@ -697,7 +696,7 @@ class CustomFilters():
             return bool(message.document and
                         message.document.mime_type == self.mime_type)
 
-    mime_type = MimeType
+    mime_type = MimeType()
 
     class HasText(BaseFilter):
 

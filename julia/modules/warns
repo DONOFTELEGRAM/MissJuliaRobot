@@ -689,7 +689,6 @@ from julia.modules.helper_funcs.chat_status import user_can_restrict
 from julia.modules.helper_funcs.extraction import extract_text
 from julia.modules.helper_funcs.extraction import extract_user
 from julia.modules.helper_funcs.extraction import extract_user_and_text
-from julia.modules.helper_funcs.filters import CustomFilters
 from julia.modules.helper_funcs.misc import split_message
 from julia.modules.helper_funcs.string_handling import split_quotes
 from julia.modules.log_channel import loggable

@@ -673,7 +673,6 @@ import textwrap
 import time
 import traceback
 import urllib.request
-from contextlib import contextmanager
 from datetime import datetime
 from html import unescape
 from random import randrange
@@ -687,7 +686,6 @@ import barcode
 import bs4
 import emoji
 import html2text
-import nude
 import pyfiglet
 import requests
 import telegraph
